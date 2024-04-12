@@ -3,14 +3,17 @@ package com.loginpage.basicLoginSignUp.DAO;
 import com.loginpage.basicLoginSignUp.entity.Authorities;
 import com.loginpage.basicLoginSignUp.entity.Person;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.Transient;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 @Repository
@@ -43,20 +46,6 @@ public class PeopleDao implements PeopleRepository{
     }
 
     @Override
-    @Transactional
-    public void updateAPerson(Person person, Authorities authorities) {
-
-        person.addRoles(authorities);
-
-        System.out.println("Auth here look");
-
-        person.getAuthorities().forEach(a -> System.out.println(a.getAuthority()));
-
-        this.entityManager.merge(person);
-
-    }
-
-    @Override
     public Person getPersonByName(String name) {
 
         TypedQuery<Person> query =  this.entityManager.createQuery("SELECT p FROM Person p " +
@@ -74,7 +63,7 @@ public class PeopleDao implements PeopleRepository{
     @Transactional
     public void updateTheRolesOfAUser(String name, String authorities) {
 
-//        get the person in the db
+        // get the person in the db
         Person person = getPersonByName(name);
 
         // get the authority from the db
@@ -88,7 +77,19 @@ public class PeopleDao implements PeopleRepository{
 
     }
 
+    @Override
+    @Transactional
+    public boolean addNewUserWithAnExistingRoll(Person person, Collection<String> roles) throws EmptyResultDataAccessException, DataIntegrityViolationException, SQLIntegrityConstraintViolationException {
 
+        //find the rolls in db only then can you get a composite persist
+        roles.forEach(a ->  person.addRoles(getAuthorityByName(a)));
+
+        if(person.getAuthorities() == null) return false;
+
+        entityManager.persist(person);
+
+        return true;
+    }
 
 
 }

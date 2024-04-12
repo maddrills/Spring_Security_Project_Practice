@@ -12,6 +12,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+
 
 @SpringBootApplication
 public class BasicLoginSignUpApplication {
@@ -33,7 +37,11 @@ public class BasicLoginSignUpApplication {
 
 			//personDetailsService.addARollToAUser(new Authorities("Admin"), new Person("JEEN",26, "mat@matify.com","hsbc"));
 
-			personDetailsService.updateAPersonsRoles("Mathew Francis","Admin");
+			//personDetailsService.updateAPersonsRoles("John Wick","Admin");
+//			personDetailsService.addAPersonWithAnExistingRole(
+//					new Person("Kelly",26, "mat@matify.com","hsbc"),
+//					new HashSet<>(List.of("Admin"))
+//			);
 		};
 	}
 
@@ -46,7 +54,7 @@ public class BasicLoginSignUpApplication {
 
 	}
 	public void addAUser(PersonDetailsService personDetailsService){
-		Person mat = new Person("Mathew Francis",26, "mat@matify.com","hsbc");
+		Person mat = new Person("John Wick",26, "mat@matify.com","hsbc");
 		//mat.addRoles();
 		personDetailsService.addAPerson(mat);
 	}

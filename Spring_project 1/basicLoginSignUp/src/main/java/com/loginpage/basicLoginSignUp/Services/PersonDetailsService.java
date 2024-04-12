@@ -4,8 +4,11 @@ import com.loginpage.basicLoginSignUp.DAO.PeopleRepository;
 import com.loginpage.basicLoginSignUp.entity.Authorities;
 import com.loginpage.basicLoginSignUp.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Collection;
 
 @Service
@@ -34,13 +37,20 @@ public class PersonDetailsService {
         return peopleRepository.getPersonByName(name);
     }
 
-    public void addARollToAUser(Authorities authorities, Person person){
-
-        peopleRepository.updateAPerson(person, authorities);
-
-    }
-
     public void updateAPersonsRoles(String name, String authorities){
         peopleRepository.updateTheRolesOfAUser(name, authorities);
+    }
+
+    public boolean addAPersonWithAnExistingRole(Person person, Collection<String> auths){
+
+        try{
+            return peopleRepository.addNewUserWithAnExistingRoll(person, auths);
+        }catch (EmptyResultDataAccessException e){
+            System.out.println(" Roll Not Found In db " + e);
+            return false;
+        }catch (SQLIntegrityConstraintViolationException | DataIntegrityViolationException e){
+            System.out.println(" Duplicate Name In DB please enter a new name" + e);
+            return false;
+        }
     }
 }
