@@ -6,6 +6,10 @@ import com.loginpage.basicLoginSignUp.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -15,17 +19,37 @@ import java.util.Collection;
 public class PersonDetailsService {
 
     @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
     PeopleRepository peopleRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+
+    private String encryptor(String planeText){
+
+        String passwordEncr = passwordEncoder.encode(planeText);
+        return "{bcrypt}"+passwordEncr;
+
+    }
 
     public void addAPerson(Person person){
 
         //any business logic goes here before entering the entity
+
+        //encrypt and modify user password
+        person.setPassword(encryptor(person.getPassword()));
+
         peopleRepository.addAPerson(person);
 
     }
 
     public void addARoll(Authorities authorities){
+
+        authorities.setAuthority("ROLE_"+authorities.getAuthority());
+
         peopleRepository.addARoll(authorities);
     }
 
@@ -41,7 +65,15 @@ public class PersonDetailsService {
         peopleRepository.updateTheRolesOfAUser(name, authorities);
     }
 
+    public void authLoginCustomer(Authentication authentication){
+
+        System.out.print(authentication.getName());
+    }
+
     public boolean addAPersonWithAnExistingRole(Person person, Collection<String> auths){
+
+        //encrypt and modify user password
+        person.setPassword(encryptor(person.getPassword()));
 
         try{
             return peopleRepository.addNewUserWithAnExistingRoll(person, auths);

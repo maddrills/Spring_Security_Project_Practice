@@ -82,7 +82,7 @@ public class PeopleDao implements PeopleRepository{
     public boolean addNewUserWithAnExistingRoll(Person person, Collection<String> roles) throws EmptyResultDataAccessException, DataIntegrityViolationException, SQLIntegrityConstraintViolationException {
 
         //find the rolls in db only then can you get a composite persist
-        roles.forEach(a ->  person.addRoles(getAuthorityByName(a)));
+        roles.forEach(a ->  person.addRoles(getAuthorityByName("ROLE_"+a)));
 
         if(person.getAuthorities() == null) return false;
 
