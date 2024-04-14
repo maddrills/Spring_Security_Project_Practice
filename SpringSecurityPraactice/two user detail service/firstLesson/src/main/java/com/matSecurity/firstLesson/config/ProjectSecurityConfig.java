@@ -69,10 +69,11 @@ public class ProjectSecurityConfig {
 //
 
     // when using db related authentication
-    @Bean
-    public UserDetailsService userDetailsService(DataSource dataSource) {
-        return new JdbcUserDetailsManager(dataSource);
-    }
+//    dont use if you have your custom table its a spring auth stuff
+//    @Bean
+//    public UserDetailsService userDetailsService(DataSource dataSource) {
+//        return new JdbcUserDetailsManager(dataSource);
+//    }
 
     // tells spring security that authorise passwords with plane text
     @Bean
