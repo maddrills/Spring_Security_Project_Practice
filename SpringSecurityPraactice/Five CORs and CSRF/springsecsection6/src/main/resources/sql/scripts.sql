@@ -1,4 +1,4 @@
-create database IF NOT EXISTS eazybank;
+create database eazybank;
 
 use eazybank;
 
