@@ -29,14 +29,23 @@ public class ProjectSecurityConfig {
         http.securityContext((context) -> context
                         .requireExplicitSave(false))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+                //CROs config
                 .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
                     @Override
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                         CorsConfiguration config = new CorsConfiguration();
+                        //the allowed origins we permit
                         config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+                        //Like GET POST PUT DELETE etc
                         config.setAllowedMethods(Collections.singletonList("*"));
+                        //says that the above are allowed to proceed
+                        //method in Spring Security allows you to specify whether user credentials are supported
                         config.setAllowCredentials(true);
+                        //here if we have http headers that have authorisations we can allow them here
+                        //corsConfiguration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
+                        //This code configures CORS to allow the "Content-Type" and "Authorization" headers in the CORS request.
                         config.setAllowedHeaders(Collections.singletonList("*"));
+                        //Configure how long, in seconds, the response from a pre-flight request can be cached by clients.
                         config.setMaxAge(3600L);
                         return config;
                     }

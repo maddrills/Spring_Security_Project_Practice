@@ -20,6 +20,7 @@ public class NoticesController {
 
     @GetMapping("/notices")
     public ResponseEntity<List<Notice>> getNotices() {
+        // ui local caching to improve performance
         List<Notice> notices = noticeRepository.findAllActiveNotices();
         if (notices != null ) {
             return ResponseEntity.ok()
