@@ -8,7 +8,7 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-
+//CSRF filter
 public class CsrfCookieFilter extends OncePerRequestFilter {
 
     @Override
