@@ -13,11 +13,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 //custom user authentication
+@Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
@@ -29,7 +31,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 
     @Override
-    @Bean
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
         //get credentials from login form

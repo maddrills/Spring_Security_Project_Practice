@@ -1,26 +1,39 @@
 package com.loginpage.basicLoginSignUp.config;
 
-import com.loginpage.basicLoginSignUp.filter.JWTTokenGeneratorFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 
 @Configuration
 public class ProjectSecurityConfig {
+
+
+
+    @Deprecated
+    @Bean
+    public AuthenticationManager authManager(UserDetailsService detailsService){
+        DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
+        daoProvider.setUserDetailsService(detailsService);
+        return new ProviderManager(daoProvider);
+    }
+
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception{
 
         //the token is generated here
-        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
-        requestHandler.setCsrfRequestAttributeName("_csrf");
+//        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+//        requestHandler.setCsrfRequestAttributeName("_csrf");
 
         // bellow line is used when you are using JWT tokens instead of session keys
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -29,7 +42,7 @@ public class ProjectSecurityConfig {
                 .csrf((csrf) -> csrf.disable())
 
                 //here is where the token is generated and returned
-                .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+                //.addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
 
                 //here is where the roll based authorisation happens
                 .authorizeHttpRequests((requests) -> requests

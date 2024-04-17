@@ -30,18 +30,18 @@ public class BasicLoginSignUpApplication {
 	@Bean
 	CommandLineRunner runner(PersonDetailsService personDetailsService){
 		return (args) -> {
-			//addAUser(personDetailsService);
-			//addAuthority(personDetailsService);
-			//displayAllAuthority(personDetailsService);
-			//getPersonByName(personDetailsService);
+//			addAUser(personDetailsService);
+//			addAuthority(personDetailsService);
+//			displayAllAuthority(personDetailsService);
+//			getPersonByName(personDetailsService);
 
 			//personDetailsService.addARollToAUser(new Authorities("Admin"), new Person("JEEN",26, "mat@matify.com","hsbc"));
 
-			//personDetailsService.updateAPersonsRoles("John Wick","Admin");
-/*			personDetailsService.addAPersonWithAnExistingRole(
-					new Person("Kelly",26, "mat@matify.com","hsbc"),
-					new HashSet<>(List.of("Admin"))
-			);*/
+//			personDetailsService.updateAPersonsRoles("John Wick","ROLE_Admin");
+//			personDetailsService.addAPersonWithAnExistingRole(
+//					new Person("Kelly",26, "mat@matify.com","hsbc"),
+//					new HashSet<>(List.of("Admin"))
+//			);
 		};
 	}
 
