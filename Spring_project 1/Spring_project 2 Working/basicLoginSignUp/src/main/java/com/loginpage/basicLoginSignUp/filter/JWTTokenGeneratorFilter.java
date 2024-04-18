@@ -36,7 +36,7 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
             //creating a JWT token
             // issuer issues a jwt token
             //subject can be any value
-            String jwt = Jwts.builder().issuer("WASD CLUB").subject("JWT Token")
+            String jwt = Jwts.builder().issuer("Mathew Francis").subject("JWT_Token")
                     //building the token
                     .claim("username", authentication.getName())
                     .claim("authorities", populateAuthorities(authentication.getAuthorities()))

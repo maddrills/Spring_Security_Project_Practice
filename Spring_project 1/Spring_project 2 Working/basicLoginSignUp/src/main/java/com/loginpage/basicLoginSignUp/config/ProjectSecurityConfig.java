@@ -1,6 +1,8 @@
 package com.loginpage.basicLoginSignUp.config;
 
+import com.loginpage.basicLoginSignUp.filter.CsrfCookieFilter;
 import com.loginpage.basicLoginSignUp.filter.JWTTokenGeneratorFilter;
+import com.loginpage.basicLoginSignUp.filter.JWTTokenValidatorFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -11,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 
 @Configuration
@@ -20,19 +23,22 @@ public class ProjectSecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception{
 
         //the token is generated here
-//        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
-//        requestHandler.setCsrfRequestAttributeName("_csrf");
+        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+        requestHandler.setCsrfRequestAttributeName("_csrf");
 
-        // bellow line is used when you are using JWT tokens instead of session keys
+        // bellow line is used when you are using JWT tokens instead of jSession session keys
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 //temporarily disabling cross sight resource forgery
-                .csrf(AbstractHttpConfigurer::disable)
+                //.csrf(AbstractHttpConfigurer::disable)
+                .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/contact","/register")
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
 
-                //here is where the token is generated and returned
-                //.addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
-
-                //here is where the roll based authorisation happens
+                //token generation after BasicAuthenticationFilter.class
+                .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+                //then position the verification filter
+                .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests((requests) -> requests
                         //only admin can use this rout
                         .requestMatchers("/user/**").hasAnyRole("Admin")

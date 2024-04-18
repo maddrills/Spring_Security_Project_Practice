@@ -1,6 +1,6 @@
 package com.loginpage.basicLoginSignUp.Constents;
 
 public interface SecurityConstants {
-    public static final String JWT_KEY = "jxgEQeXHuPq8VdbyYFNkANdudQ53YUn4";
+    public static final String JWT_KEY = ";sdmn3426FHB426RH62389;]['/.sdwswa";
     public static final String JWT_HEADER = "Authorization";
 }
