@@ -1,0 +1,36 @@
+#DROP DATABASE IF EXISTS `Basic_User`;
+
+CREATE DATABASE IF NOT EXISTS `Basic_User`; 		
+
+USE `Basic_User`;
+
+DROP TABLE IF EXISTS `users_authorities`;
+DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `authorities`;
+
+
+CREATE TABLE `users`(
+`id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
+`name` VARCHAR(65) NOT NULL,
+`age` INTEGER NOT NULL,
+`email` VARCHAR(70) NOT NULL,
+`password` VARCHAR(68) NOT NULL,
+CONSTRAINT `PRIMARY_KEY_CONSTRAINT_USERS` PRIMARY KEY (`id`) 
+)ENGINE 'InnoDB' AUTO_INCREMENT = 1 DEFAULT CHARSET 'latin1';
+
+CREATE TABLE `authorities`(
+`id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
+`authority` VARCHAR(20) NOT NULL UNIQUE,
+CONSTRAINT `PRIMARY_KEY_CONSTRAINT_AUTHORITIES` PRIMARY KEY(`id`)
+)ENGINE 'InnoDB' AUTO_INCREMENT = 1 DEFAULT CHARSET 'latin1';
+
+
+CREATE TABLE `users_authorities`(
+`id_users` INTEGER NOT NULL,
+`id_authorities`INTEGER NOT NULL,
+CONSTRAINT `users_authorities_pk` PRIMARY KEY(`id_users`,`id_authorities`),
+CONSTRAINT `users_authorities_users_fk` FOREIGN KEY (`id_users`) REFERENCES `users`(`id`),
+CONSTRAINT `users_authorities_authorities_fk` FOREIGN KEY (`id_authorities`) REFERENCES `authorities`(`id`)
+)ENGINE 'InnoDB' AUTO_INCREMENT = 1 DEFAULT CHARSET 'latin1';
+
+DESCRIBE `users`

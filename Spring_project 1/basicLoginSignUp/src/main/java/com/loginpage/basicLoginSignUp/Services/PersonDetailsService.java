@@ -18,8 +18,8 @@ import java.util.Collection;
 @Service
 public class PersonDetailsService {
 
-//    @Autowired
-//    private AuthenticationManager authenticationManager;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Autowired
     PeopleRepository peopleRepository;
@@ -30,7 +30,8 @@ public class PersonDetailsService {
 
     private String encryptor(String planeText){
 
-        return passwordEncoder.encode(planeText);
+        String passwordEncr = passwordEncoder.encode(planeText);
+        return "{bcrypt}"+passwordEncr;
 
     }
 
