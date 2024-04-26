@@ -3,6 +3,7 @@ package com.loginpage.basicLoginSignUp.config;
 import com.loginpage.basicLoginSignUp.filter.CsrfCookieFilter;
 import com.loginpage.basicLoginSignUp.filter.JWTTokenGeneratorFilter;
 import com.loginpage.basicLoginSignUp.filter.JWTTokenValidatorFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -15,6 +16,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.Collections;
+import java.util.List;
 
 @Configuration
 public class ProjectSecurityConfig {
@@ -28,6 +34,26 @@ public class ProjectSecurityConfig {
 
         // bellow line is used when you are using JWT tokens instead of jSession session keys
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+
+                //now because we aare sending the JWT token to The UI Application in a Header
+                //we need to manage it in the CORs config
+                .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                        //check CORs and CSRF in Previous commits
+                        CorsConfiguration config = new CorsConfiguration();
+                        config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+                        config.setAllowedMethods(Collections.singletonList("*"));
+                        config.setAllowCredentials(true);
+                        config.setAllowedHeaders(Collections.singletonList("*"));
+                        //the JWT will be sent to UI under Authorization header
+                        config.setExposedHeaders(List.of("Authorization"));
+                        config.setMaxAge(3600L);
+                        return config;
+                    }
+                }))
+
 
                 //temporarily disabling cross sight resource forgery
                 //.csrf(AbstractHttpConfigurer::disable)

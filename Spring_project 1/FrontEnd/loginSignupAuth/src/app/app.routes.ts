@@ -12,7 +12,7 @@ export const routes: Routes = [
     component: LoginSignupComponent,
     //login signup routs in lazy mode
     loadChildren: () =>
-      import('./login-signup/login-logout.routs').then(
+      import('./login-signup/login-logout.routes').then(
         (mode) => mode.LOGIN_LOGOUT_ROUTS
       ),
   },

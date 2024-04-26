@@ -60,6 +60,7 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
     }
 
 //    gets the authority's from granted authority which we set in the configuration CustomAuthenticationProvider class
+    // plug in user auth into jwt token
     private String populateAuthorities(Collection<? extends GrantedAuthority> collection) {
         Set<String> authoritiesSet = new HashSet<>();
         for (GrantedAuthority authority : collection) {

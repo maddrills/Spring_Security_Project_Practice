@@ -1,13 +1,16 @@
 <div>
-  <form class="cta-form">
+  <form class="cta-form" (ngSubmit)="onSubmit(f)" #f="ngForm">
     <div>
       <label for="userName"> User Name</label>
-      <input id="userName" type="text" name="username" />
+      <input id="userName" type="text" name="username" required ngModel />
     </div>
     <div>
       <label for="passWord">Password</label>
-      <input id="passWord" type="password" name="password" />
+      <input id="passWord" type="password" name="password" required ngModel />
     </div>
     <input class="btn" type="submit" value="Submit" />
   </form>
+  <span class="sign-up-link"
+    ><a routerLink="../sign-up">Sign up here...</a></span
+  >
 </div>
