@@ -1,5 +1,6 @@
 package com.loginpage.basicLoginSignUp.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -18,6 +19,7 @@ public class Person {
     @Column(name = "email")
     String email;
     @Column(name = "password")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
 
     @ManyToMany(
