@@ -24,6 +24,6 @@ export class LoginComponent {
       .postBasicAuthData(username, password)
       .subscribe((resp: any) => console.log(resp));
 
-    formSettings.reset();
+    // formSettings.reset();
   }
 }

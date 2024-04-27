@@ -46,6 +46,7 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
                     .signWith(key).compact();
             //SecurityConstants.JWT_HEADER, in the Constants SecurityConstants folder
             response.setHeader(SecurityConstants.JWT_HEADER, jwt);
+            System.out.println("JWT Generated");
         }
         System.out.println("Intercepted");
 

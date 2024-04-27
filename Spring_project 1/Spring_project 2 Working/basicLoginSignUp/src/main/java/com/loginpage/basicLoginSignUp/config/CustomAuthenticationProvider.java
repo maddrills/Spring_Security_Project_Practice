@@ -38,6 +38,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String pwd = authentication.getCredentials().toString();
 
         System.out.println(pwd);
+        System.out.println(username);
 
         //just gets the name
         Person customer = peopleRepository.getPersonNameAndAuthority(username);
