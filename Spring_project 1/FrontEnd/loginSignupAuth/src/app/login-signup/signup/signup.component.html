@@ -1,20 +1,20 @@
 <div>
-  <form class="cta-form">
+  <form class="cta-form" (ngSubmit)="onSubmitSignUp(f)" #f="ngForm">
     <div>
       <label for="userName"> User Name</label>
-      <input id="userName" type="text" name="username" required />
+      <input id="userName" type="text" name="username" required ngModel />
     </div>
     <div>
       <label for="passWord">Password</label>
-      <input id="passWord" type="password" name="password" required />
+      <input id="passWord" type="password" name="password" required ngModel />
     </div>
     <div>
       <label for="Age"> age</label>
-      <input id="Age" type="text" name="age" required />
+      <input id="Age" type="text" name="age" required ngModel />
     </div>
     <div>
       <label for="emaiL"> email</label>
-      <input id="emaiL" type="text" name="email" required />
+      <input id="emaiL" type="text" name="email" required ngModel />
     </div>
     <input class="btn" type="submit" value="Submit" />
   </form>

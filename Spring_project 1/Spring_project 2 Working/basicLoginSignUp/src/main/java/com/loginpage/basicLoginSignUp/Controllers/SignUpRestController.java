@@ -1,15 +1,15 @@
 package com.loginpage.basicLoginSignUp.Controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.loginpage.basicLoginSignUp.DTO.AllUserData;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("Sign-up")
+@RequestMapping("/Sign-up")
 public class SignUpRestController {
-    @PostMapping("signup-user")
-    public void testThis(){
+    @PostMapping("/signup-user")
+    public void testThis(@RequestBody AllUserData allUserData){
+
+        System.out.println(allUserData);
         System.out.println("Sign up user");
     }
 }

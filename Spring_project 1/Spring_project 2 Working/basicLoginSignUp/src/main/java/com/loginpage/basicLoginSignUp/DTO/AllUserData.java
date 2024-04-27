@@ -5,25 +5,16 @@ import jakarta.persistence.Column;
 
 import java.util.Collection;
 import java.util.HashSet;
-
 public class AllUserData {
 
     String name;
+
+    String password;
 
     int age;
 
     String email;
 
-    final Collection<String> auths = new HashSet<>();
-
-
-    public AllUserData(Collection<Authorities> auths, String email, int age, String name) {
-
-        auths.forEach(a -> this.auths.add(a.getAuthority()));
-        this.email = email;
-        this.age = age;
-        this.name = name;
-    }
 
     public String getName() {
         return name;
@@ -49,17 +40,21 @@ public class AllUserData {
         this.email = email;
     }
 
-    public Collection<String> getAuths() {
-        return auths;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
     public String toString() {
         return "AllUserData{" +
                 "name='" + name + '\'' +
+                ", password='" + password + '\'' +
                 ", age=" + age +
                 ", email='" + email + '\'' +
-                ", auths=" + auths +
                 '}';
     }
 }

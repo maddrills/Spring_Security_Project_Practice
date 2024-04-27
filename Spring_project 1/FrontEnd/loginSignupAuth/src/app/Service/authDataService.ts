@@ -9,7 +9,7 @@ export class AuthDataService {
     console.log(this);
   }
 
-  //posting basic auth to the backend
+  //LOG-IN posting basic auth to the backend
 
   postBasicAuthData(username: string, password: string) {
     console.log(username, password);
@@ -31,6 +31,24 @@ export class AuthDataService {
       headers: authHeader,
       observe: 'response',
       withCredentials: true,
+    });
+  }
+
+  //SIGN-UP sign up a new user
+
+  newUserDetailsPost(
+    username: string,
+    password: string,
+    age: number,
+    email: string
+  ) {
+    console.log(username, password, age, email);
+
+    return this.http.post<any>('http://localhost:8080/Sign-up/signup-user', {
+      name: username,
+      password: password,
+      age: age,
+      email: email,
     });
   }
 }

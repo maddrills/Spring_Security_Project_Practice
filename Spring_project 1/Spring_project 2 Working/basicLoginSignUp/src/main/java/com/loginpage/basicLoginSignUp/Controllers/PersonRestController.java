@@ -1,6 +1,5 @@
 package com.loginpage.basicLoginSignUp.Controllers;
 
-import com.loginpage.basicLoginSignUp.DTO.AllUserData;
 import com.loginpage.basicLoginSignUp.Services.PersonDetailsService;
 import com.loginpage.basicLoginSignUp.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
