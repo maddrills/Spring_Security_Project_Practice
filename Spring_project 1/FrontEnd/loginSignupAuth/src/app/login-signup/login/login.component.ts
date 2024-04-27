@@ -20,9 +20,12 @@ export class LoginComponent {
     const username = formDataFields.username;
     const password = formDataFields.password;
 
-    this.authService
-      .postBasicAuthData(username, password)
-      .subscribe((resp: any) => console.log(resp));
+    this.authService.postBasicAuthData(username, password).subscribe(
+      (resp: any) => {
+        console.log(resp);
+      },
+      (error: any) => console.log(error)
+    );
 
     // formSettings.reset();
   }

@@ -33,4 +33,11 @@ CONSTRAINT `users_authorities_users_fk` FOREIGN KEY (`id_users`) REFERENCES `use
 CONSTRAINT `users_authorities_authorities_fk` FOREIGN KEY (`id_authorities`) REFERENCES `authorities`(`id`)
 )ENGINE 'InnoDB' AUTO_INCREMENT = 1 DEFAULT CHARSET 'latin1';
 
-DESCRIBE `users`
+DESCRIBE `users`;
+
+SELECT * FROM users;
+SELECT * FROM users_authorities;
+SELECT * FROM authorities;
+
+#INSERT INTO `authorities`(`authority`) VALUES("User");
+#UPDATE `authorities` SET `authority` = "ROLE_User" WHERE `authority` = "User";
