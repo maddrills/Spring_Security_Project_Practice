@@ -40,7 +40,7 @@ public class PeopleDao implements PeopleRepository{
                 "SELECT a FROM Authorities a WHERE a.authority = :authName", Authorities.class
         );
 
-        query.setParameter("authName", name);
+        query.setParameter("authName", "ROLE_"+name);
 
         return query.getSingleResult();
     }
@@ -94,8 +94,8 @@ public class PeopleDao implements PeopleRepository{
     @Transactional
     public boolean addNewUserWithAnExistingRoll(Person person, Collection<String> roles) throws EmptyResultDataAccessException, DataIntegrityViolationException, SQLIntegrityConstraintViolationException {
 
-        //find the rolls in db only then can you get a composite persist
-        roles.forEach(a ->  person.addRoles(getAuthorityByName("ROLE_"+a)));
+        //find the rolls in db only then can you get a composite persist "ROLE_"+a in getAuthorityByName
+        roles.forEach(a ->  person.addRoles(getAuthorityByName(a)));
 
         if(person.getAuthorities() == null) return false;
 

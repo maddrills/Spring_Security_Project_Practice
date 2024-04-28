@@ -4,6 +4,8 @@ import com.loginpage.basicLoginSignUp.DTO.AllUserData;
 import com.loginpage.basicLoginSignUp.Services.PersonDetailsService;
 import com.loginpage.basicLoginSignUp.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -17,16 +19,21 @@ public class SignUpRestController {
     private PersonDetailsService personDetails;
 
     @PostMapping("/signup-user")
-    public void testThis(@RequestBody AllUserData allUserData){
+    public ResponseEntity<?> testThis(@RequestBody AllUserData allUserData){
 
         System.out.println(allUserData);
 
-        personDetails.addAPersonWithAnExistingRole(
+        boolean status = personDetails.addAPersonWithAnExistingRole(
                 new Person(
                         allUserData.getName(),
                         allUserData.getAge(),
                         allUserData.getEmail(),
                         allUserData.getPassword()), new HashSet<String>(List.of("User"))
         );
+
+        if(!status){
+            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

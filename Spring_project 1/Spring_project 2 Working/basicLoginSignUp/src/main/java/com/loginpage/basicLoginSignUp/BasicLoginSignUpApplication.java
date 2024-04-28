@@ -37,11 +37,11 @@ public class BasicLoginSignUpApplication {
 
 			//personDetailsService.addARollToAUser(new Authorities("Admin"), new Person("JEEN",26, "mat@matify.com","hsbc"));
 
-			//personDetailsService.updateAPersonsRoles("John Wick","Admin");
-/*			personDetailsService.addAPersonWithAnExistingRole(
-					new Person("Kelly",26, "mat@matify.com","hsbc"),
-					new HashSet<>(List.of("Admin"))
-			);*/
+//			personDetailsService.updateAPersonsRoles("John Wick","Admin");
+//			personDetailsService.addAPersonWithAnExistingRole(
+//					new Person("Kelly",26, "mat@matify.com","hsbc"),
+//					new HashSet<>(List.of("Admin"))
+//			);
 		};
 	}
 

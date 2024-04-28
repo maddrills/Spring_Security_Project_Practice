@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthDataService } from '../../Service/authDataService';
 
@@ -11,7 +11,11 @@ import { AuthDataService } from '../../Service/authDataService';
   styleUrls: ['./signup.component.css', '../login-signup.component.css'],
 })
 export class SignupComponent {
-  constructor(private authService: AuthDataService) {}
+  constructor(
+    private authService: AuthDataService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   onSubmitSignUp(fullForm: NgForm) {
     console.log(fullForm.form);
@@ -25,6 +29,20 @@ export class SignupComponent {
 
     this.authService
       .newUserDetailsPost(username, password, age, email)
-      .subscribe((returnVal) => console.log(returnVal));
+      .subscribe({
+        next: (v) => {
+          console.log(v);
+          console.log('Success');
+          this.router.navigate(['../log-in'], {
+            relativeTo: this.activatedRoute,
+          });
+        },
+        error: (e) => {
+          console.log(e);
+          console.log('Error');
+          //change the dom to handle error
+        },
+        complete: () => console.info('complete'),
+      });
   }
 }
