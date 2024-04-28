@@ -11,14 +11,19 @@ import {
   standalone: true,
 })
 export class WrongInputDirective {
+  // ignore renderer its the dom manipulation method not recommended
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
 
+  //only then can we do [appWrongInput]="formCondition"
   @Input() set appWrongInput(condition: boolean) {
     if (condition) {
       this.styles = { boxShadow: '0 0 1px 2px red inset' };
     }
   }
 
+  // bides this to an elements property on the dom
+  //@HostBinding('style') 'style' -> take the style Attribute
+  // change its boxShadow property
   @HostBinding('style') styles = {
     boxShadow: '0 0 1px 2px white inset',
   };
