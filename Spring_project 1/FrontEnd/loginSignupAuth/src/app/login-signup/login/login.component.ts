@@ -32,6 +32,12 @@ export class LoginComponent {
     this.authService.postBasicAuthData(username, password).subscribe({
       next: (v) => {
         console.log(v);
+        //console.log(v.headers.get('Authorization'));
+        window.sessionStorage.setItem(
+          'Authorization',
+          //If you are confident that the localStorage.getItem() call can never return null you can use the non-null (!) assertion operator to tell typescript that you know what you are doing:
+          v.headers.get('Authorization')!
+        );
         console.log('Success');
       },
       error: (e) => {
