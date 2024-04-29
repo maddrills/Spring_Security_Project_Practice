@@ -42,7 +42,10 @@ export class LoginComponent {
       },
       complete: () => console.info('complete'),
     });
-
     // formSettings.reset();
+  }
+
+  resetInputStatus() {
+    this.formCondition = false;
   }
 }

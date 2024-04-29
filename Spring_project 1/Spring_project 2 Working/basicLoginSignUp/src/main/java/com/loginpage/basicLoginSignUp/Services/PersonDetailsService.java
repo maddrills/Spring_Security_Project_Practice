@@ -32,6 +32,8 @@ public class PersonDetailsService {
     }
 
     public void addAPerson(Person person){
+        //sanity check
+        if(!personSanityCheck(person)) return;
 
         //any business logic goes here before entering the entity
 
@@ -64,6 +66,8 @@ public class PersonDetailsService {
 
     public boolean addAPersonWithAnExistingRole(Person person, Collection<String> auths){
 
+        //sanity check
+        if(!personSanityCheck(person)) return false;
         //encrypt and modify user password
         person.setPassword(encryptor(person.getPassword()));
 
@@ -76,5 +80,9 @@ public class PersonDetailsService {
             System.out.println(" Duplicate Name In DB please enter a new name" + e);
             return false;
         }
+    }
+
+    private boolean personSanityCheck(Person person){
+        return person.getName() != null && person.getPassword() != null && person.getAge() > 0 && person.getEmail() != null;
     }
 }

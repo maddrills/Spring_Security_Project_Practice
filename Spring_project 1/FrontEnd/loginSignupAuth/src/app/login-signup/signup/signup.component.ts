@@ -49,4 +49,8 @@ export class SignupComponent {
         complete: () => console.info('complete'),
       });
   }
+
+  resetInputStatus() {
+    this.formCondition = false;
+  }
 }

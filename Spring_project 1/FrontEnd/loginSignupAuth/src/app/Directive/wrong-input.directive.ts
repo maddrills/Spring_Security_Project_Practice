@@ -5,7 +5,7 @@ import {
   Input,
   Renderer2,
 } from '@angular/core';
-// used to change dom
+// used to change dom use appWrongInput or [appWrongInput] on any dom element to have an effect on it
 @Directive({
   selector: '[appWrongInput]',
   standalone: true,
@@ -18,6 +18,8 @@ export class WrongInputDirective {
   @Input() set appWrongInput(condition: boolean) {
     if (condition) {
       this.styles = { boxShadow: '0 0 1px 2px red inset' };
+    } else {
+      this.styles = { boxShadow: '0 0 1px 2px white inset' };
     }
   }
 

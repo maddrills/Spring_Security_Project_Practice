@@ -2,7 +2,12 @@
   <div *ngIf="formCondition">
     <p>userName taken or Not given appropriate number of fields</p>
   </div>
-  <form class="cta-form" (ngSubmit)="onSubmitSignUp(f)" #f="ngForm">
+  <form
+    class="cta-form"
+    (click)="resetInputStatus()"
+    (ngSubmit)="onSubmitSignUp(f)"
+    #f="ngForm"
+  >
     <div>
       <label for="userName"> User Name</label>
       <input

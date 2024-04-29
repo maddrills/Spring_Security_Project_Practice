@@ -2,7 +2,7 @@
   <div *ngIf="formCondition">
     <p>User name or Password error</p>
   </div>
-  <form class="cta-form" (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <form class="cta-form" (click) = "resetInputStatus()" (ngSubmit)="onSubmit(f)" #f="ngForm">
     <div>
       <label for="userName"> User Name</label>
       <input
