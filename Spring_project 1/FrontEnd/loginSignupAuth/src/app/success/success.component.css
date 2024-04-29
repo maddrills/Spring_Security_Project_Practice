@@ -1,0 +1,77 @@
+.hedingColorSizing {
+  margin-bottom: 2rem;
+}
+
+footer,
+.hedingColorSizing {
+  background-color: #1864ab;
+  color: #edf2ff;
+  padding: 4rem;
+  justify-content: center;
+}
+
+footer p {
+  font-size: 1.2rem;
+}
+.hedingColorSizing h1 {
+  font-size: 4rem;
+}
+
+.hedingColorSizing span {
+  font-size: 2.4rem;
+  align-self: center;
+}
+.displayFlex h2 {
+  font-size: 3rem;
+}
+.displayFlex ul {
+  margin-left: 1.2rem;
+}
+.displayFlex li {
+  font-size: 2rem;
+  margin-bottom: 1.2rem;
+}
+
+.authorities {
+  padding: 3rem;
+  margin-bottom: 2.2rem;
+}
+
+.details {
+  padding: 3rem;
+}
+
+.details div {
+  margin-bottom: 2.2rem;
+}
+
+.details div h3 {
+  font-size: 2.2rem;
+}
+
+.details div span {
+  display: inline-block;
+  align-self: center;
+  font-size: 2rem;
+}
+
+.buttonShell {
+  padding: 3rem;
+}
+
+.buttonShell button {
+  padding: 3rem;
+  border-radius: 5px;
+  border-style: none;
+  cursor: pointer;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #fff5f5;
+  background-color: #c92a2a;
+  transition: all 0.3s;
+}
+
+.buttonShell button:hover,
+.buttonShell button:active {
+  background-color: #f03e3e;
+}
