@@ -1,20 +1,51 @@
 <div>
+  <div *ngIf="formCondition">
+    <p>userName taken or Not given appropriate number of fields</p>
+  </div>
   <form class="cta-form" (ngSubmit)="onSubmitSignUp(f)" #f="ngForm">
     <div>
       <label for="userName"> User Name</label>
-      <input id="userName" type="text" name="username" required ngModel />
+      <input
+        id="userName"
+        type="text"
+        name="username"
+        required
+        ngModel
+        [appWrongInput]="formCondition"
+      />
     </div>
     <div>
       <label for="passWord">Password</label>
-      <input id="passWord" type="password" name="password" required ngModel />
+      <input
+        id="passWord"
+        type="password"
+        name="password"
+        required
+        ngModel
+        [appWrongInput]="formCondition"
+      />
     </div>
     <div>
       <label for="Age"> age</label>
-      <input id="Age" type="text" name="age" required ngModel />
+      <input
+        id="Age"
+        type="text"
+        name="age"
+        required
+        ngModel
+        [appWrongInput]="formCondition"
+      />
     </div>
     <div>
       <label for="emaiL"> email</label>
-      <input id="emaiL" type="text" name="email" required ngModel />
+      <input
+        id="emaiL"
+        type="text"
+        name="email"
+        required
+        ngModel
+        [appWrongInput]="formCondition"
+      />
     </div>
     <input class="btn" type="submit" value="Submit" />
   </form>
