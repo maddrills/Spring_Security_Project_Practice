@@ -15,3 +15,22 @@ body {
   font-weight: 400;
   color: #555;
 }
+
+.container {
+  max-width: 70rem;
+  padding: 0 3.2rem;
+  margin: 0 auto;
+}
+
+.gridDisplay {
+  display: grid;
+}
+
+.one-spacing-grid-column {
+  grid-template-columns: 1fr;
+}
+
+.displayFlex {
+  display: flex;
+  gap: 3rem;
+}

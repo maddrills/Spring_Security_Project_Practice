@@ -22,7 +22,7 @@
 /* common form styling */
 .cta-form {
   display: grid;
-  grid-template-columns: ifr 1fr;
+  grid-template-columns: 1fr;
   row-gap: 2rem;
   padding: 3rem;
 }
