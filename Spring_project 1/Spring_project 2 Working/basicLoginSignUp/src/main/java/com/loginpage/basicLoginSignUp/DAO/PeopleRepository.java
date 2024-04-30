@@ -24,4 +24,6 @@ public interface PeopleRepository {
     public void updateTheRolesOfAUser(String name, String authorities);
 
     public boolean addNewUserWithAnExistingRoll(Person person, Collection<String> roles) throws EmptyResultDataAccessException, DataIntegrityViolationException, SQLIntegrityConstraintViolationException;
+
+    public boolean deleteUserById(int userId);
 }

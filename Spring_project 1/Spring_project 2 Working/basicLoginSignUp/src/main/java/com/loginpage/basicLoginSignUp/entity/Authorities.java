@@ -1,6 +1,9 @@
 package com.loginpage.basicLoginSignUp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.Collection;
 
 @Entity
 @Table(name = "authorities")
@@ -12,6 +15,24 @@ public class Authorities {
     @Column(name = "authority")
     String authority;
 
+
+    @JsonIgnore
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH,
+            }
+            //cascade = CascadeType.ALL
+    )
+    @JoinTable(
+            name = "users_authorities",
+            joinColumns = @JoinColumn(name = "id_authorities"),
+            inverseJoinColumns = @JoinColumn(name = "id_users")
+    )
+    Collection<Person> person;
 
     Authorities(){}
 
@@ -29,5 +50,17 @@ public class Authorities {
 
     public void setAuthority(String authority) {
         this.authority = authority;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Collection<Person> getPerson() {
+        return person;
+    }
+
+    public void setPerson(Collection<Person> person) {
+        this.person = person;
     }
 }

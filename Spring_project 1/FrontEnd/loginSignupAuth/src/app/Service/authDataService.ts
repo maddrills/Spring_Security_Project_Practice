@@ -1,8 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { User } from '../Model/userModel';
+import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthDataService {
+  userSubject = new Subject<User>();
+
   constructor(private http: HttpClient) {}
 
   testService() {

@@ -29,8 +29,8 @@ public class Person {
                     CascadeType.MERGE,
                     CascadeType.PERSIST,
                     CascadeType.REFRESH,
-                    CascadeType.REMOVE
             }
+            //cascade = CascadeType.ALL
     )
     @JoinTable(
             name = "users_authorities",

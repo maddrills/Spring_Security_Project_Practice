@@ -42,6 +42,9 @@ public class BasicLoginSignUpApplication {
 //					new Person("Kelly",26, "mat@matify.com","hsbc"),
 //					new HashSet<>(List.of("Admin"))
 //			);
+
+//			addAUser(personDetailsService);
+//			updateTheRoleOfUser(personDetailsService);
 		};
 	}
 
@@ -55,8 +58,10 @@ public class BasicLoginSignUpApplication {
 	}
 	public void addAUser(PersonDetailsService personDetailsService){
 		Person mat = new Person("John Wick",26, "mat@matify.com","hsbc");
+		Person mat1 = new Person("Ron",26, "RonAdminUser@matify.com","12345");
 		//mat.addRoles();
 		personDetailsService.addAPerson(mat);
+		personDetailsService.addAPerson(mat1);
 	}
 
 	public void displayAllAuthority(PersonDetailsService personDetailsService){
@@ -64,6 +69,11 @@ public class BasicLoginSignUpApplication {
 		System.out.println(personDetailsService.getAllAuthorities("Admin").getAuthority());
 	}
 
+	public void updateTheRoleOfUser(PersonDetailsService personDetailsService){
+		personDetailsService.updateAPersonsRoles("Ron","Admin");
+		personDetailsService.updateAPersonsRoles("Ron","User");
+		personDetailsService.updateAPersonsRoles("John Wick", "Admin");
+	}
 
 
 

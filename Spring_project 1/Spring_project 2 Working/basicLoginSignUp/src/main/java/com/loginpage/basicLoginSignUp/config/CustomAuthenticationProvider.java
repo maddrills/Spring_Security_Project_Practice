@@ -37,9 +37,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String pwd = authentication.getCredentials().toString();
 
+        //sanity check
+        if(username.isEmpty() || pwd.isEmpty()) return null;
+
         System.out.println(pwd);
         System.out.println(username);
-
         //just gets the name
         Person customer = peopleRepository.getPersonNameAndAuthority(username);
 

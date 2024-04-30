@@ -60,6 +60,8 @@ public class PeopleDao implements PeopleRepository{
     @Override
     public Person getPersonNameAndAuthority(String name){
 
+        if(name.isEmpty())return null;
+
         TypedQuery<Person> query = this.entityManager.createQuery(
                 "SELECT p FROM Person p " +
                         "JOIN FETCH p.authorities " +
@@ -100,6 +102,21 @@ public class PeopleDao implements PeopleRepository{
         if(person.getAuthorities() == null) return false;
 
         entityManager.persist(person);
+
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteUserById(int userId) {
+
+        Person personToDelete = entityManager.find(Person.class, userId);
+
+        if (personToDelete == null ) return false;
+
+        System.out.print(personToDelete.getName());
+
+        entityManager.remove(personToDelete);
 
         return true;
     }

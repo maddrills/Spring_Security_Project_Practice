@@ -82,6 +82,15 @@ public class PersonDetailsService {
         }
     }
 
+    public Person getAllDetailsOfAPerson(String name){
+        return peopleRepository.getPersonNameAndAuthority(name);
+    }
+
+    public boolean deletePerson(int theId){
+        return peopleRepository.deleteUserById(theId);
+    }
+
+
     private boolean personSanityCheck(Person person){
         return person.getName() != null && person.getPassword() != null && person.getAge() > 0 && person.getEmail() != null;
     }

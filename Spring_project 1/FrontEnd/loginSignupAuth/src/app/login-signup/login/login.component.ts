@@ -4,6 +4,8 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthDataService } from '../../Service/authDataService';
 import { WrongInputDirective } from '../../Directive/wrong-input.directive';
 import { CommonModule } from '@angular/common';
+import { User } from '../../Model/userModel';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -32,19 +34,25 @@ export class LoginComponent {
     this.authService.postBasicAuthData(username, password).subscribe({
       next: (v) => {
         console.log(v);
+        const user = <User>v.body;
+        this.authService.userSubject.next(user);
+        //console.log(user);
         //console.log(v.headers.get('Authorization'));
         window.sessionStorage.setItem(
           'Authorization',
           //If you are confident that the localStorage.getItem() call can never return null you can use the non-null (!) assertion operator to tell typescript that you know what you are doing:
           v.headers.get('Authorization')!
         );
+
+        window.sessionStorage.setItem('userDetails', JSON.stringify(user!));
         console.log('Success');
+
+        this.router.navigate(['welcome']);
       },
       error: (e) => {
         console.log(e);
         console.log('Error');
         this.formCondition = true;
-        console.log(this.formCondition);
       },
       complete: () => console.info('complete'),
     });

@@ -67,7 +67,9 @@ public class ProjectSecurityConfig {
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests((requests) -> requests
                         //only admin can use this rout
-                        .requestMatchers("/user/**").hasAnyRole("Admin")
+                        .requestMatchers("/user/remove-user", "/user/addUser").hasAnyRole("Admin")
+                        .requestMatchers("/user/getAllUserData").hasAnyRole("User")
+                        //.requestMatchers("/user/**").hasAnyRole("Admin","User")
                         //any one who is authenticated can access /users
                         .requestMatchers("/user").authenticated()
                         //all the rest are open to public
