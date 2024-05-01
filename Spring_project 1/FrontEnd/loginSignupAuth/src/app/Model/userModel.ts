@@ -1,7 +1,9 @@
 export class User {
-  id: number = 0;
-  name: string = '';
-  age: number = 0;
-  email: string = '';
-  authorities: string[] = [];
+  constructor(
+    public id: number,
+    public name: string,
+    public age: number,
+    public email: string,
+    public authorities: { id: number; authority: string }[]
+  ) {}
 }

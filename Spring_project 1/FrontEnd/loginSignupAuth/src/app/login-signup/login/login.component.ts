@@ -35,7 +35,6 @@ export class LoginComponent {
       next: (v) => {
         console.log(v);
         const user = <User>v.body;
-        this.authService.userSubject.next(user);
         //console.log(user);
         //console.log(v.headers.get('Authorization'));
         window.sessionStorage.setItem(

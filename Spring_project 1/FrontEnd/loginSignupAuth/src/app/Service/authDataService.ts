@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../Model/userModel';
-import { Subject } from 'rxjs';
+import { Subject, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthDataService {
-  userSubject = new Subject<User>();
+  authenticated = false;
 
   constructor(private http: HttpClient) {}
 
@@ -19,23 +19,23 @@ export class AuthDataService {
     console.log(username, password);
 
     const header = new HttpHeaders();
-    // Update: adding multiple headers
-    //let headers = new HttpHeaders();
-    //headers = headers.set('h1', 'v1').set('h2','v2');
-    //or
-    //const headers = new HttpHeaders({'h1':'v1','h2':'v2'});
-    //spring basic username pass auth format
-    //The btoa() method creates a Base64-encoded ASCII string from a binary string (i.e., a string in which each character in the string is treated as a byte of binary data).
+
     const authHeader = header.set(
       'Authorization',
       'Basic ' + window.btoa(username + ':' + password)
     );
 
-    return this.http.get<any>('http://localhost:8080/login/LoginUser', {
-      headers: authHeader,
-      observe: 'response',
-      withCredentials: true,
-    });
+    return this.http
+      .get<any>('http://localhost:8080/login/LoginUser', {
+        headers: authHeader,
+        observe: 'response',
+        withCredentials: true,
+      })
+      .pipe(
+        tap((responseData) => {
+          if (responseData) this.authenticated = true;
+        })
+      );
   }
 
   //SIGN-UP sign up a new user

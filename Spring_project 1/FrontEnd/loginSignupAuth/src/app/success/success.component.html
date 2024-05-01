@@ -1,4 +1,7 @@
 <section class="gridDisplay .one-spacing-grid-column container">
+  <div *ngIf="authenticated">
+    <p>Your Authenticated</p>
+  </div>
   <div class="displayFlex hedingColorSizing">
     <h1>Welcome :</h1>
     <span><p>Person name To your page</p></span>
@@ -7,23 +10,29 @@
     <div class="displayFlex authorities">
       <h2>Authorities you possess :</h2>
       <ul>
-        <li>Authority 1</li>
-        <li>Authority 2</li>
-        <li>Authority 3</li>
+        <li *ngFor="let value of userDetails?.authorities">
+          {{ value.authority }}
+        </li>
       </ul>
     </div>
     <div class="details">
       <div class="displayFlex">
         <h3>Name :</h3>
-        <span><p>name goes here</p></span>
+        <span
+          ><p>{{ userDetails?.name }}</p></span
+        >
       </div>
       <div class="displayFlex">
         <h3>Age :</h3>
-        <span><p>Age goes here</p></span>
+        <span
+          ><p>{{ userDetails?.age }}</p></span
+        >
       </div>
       <div class="displayFlex">
         <h3>email :</h3>
-        <span><p>email goes here</p></span>
+        <span
+          ><p>{{ userDetails?.email }}</p></span
+        >
       </div>
     </div>
 

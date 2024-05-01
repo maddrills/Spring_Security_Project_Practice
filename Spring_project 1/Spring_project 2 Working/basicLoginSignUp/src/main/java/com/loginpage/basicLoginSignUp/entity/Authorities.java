@@ -20,6 +20,7 @@ public class Authorities {
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {
+                    //The detach operation removes the entity from the persistent context. When we use CascadeType.DETACH, the child entity will also get removed from the persistent context.
                     CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.PERSIST,
