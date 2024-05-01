@@ -11,6 +11,7 @@ public class Authorities {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @JsonIgnore
     int id;
     @Column(name = "authority")
     String authority;

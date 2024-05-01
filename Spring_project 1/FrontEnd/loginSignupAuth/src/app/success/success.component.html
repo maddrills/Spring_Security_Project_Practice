@@ -4,7 +4,9 @@
   </div>
   <div class="displayFlex hedingColorSizing">
     <h1>Welcome :</h1>
-    <span><p>Person name To your page</p></span>
+    <span
+      ><p>{{ userDetails?.name }} To your page</p></span
+    >
   </div>
   <article>
     <div class="displayFlex authorities">
@@ -36,8 +38,8 @@
       </div>
     </div>
 
-    <div class="buttonShell">
-      <button (click)="check()">Admin Control Center</button>
+    <div class="buttonShell" *ngIf="this.adminHere">
+      <button (click)="adminSwitch()">Admin Control Center</button>
     </div>
   </article>
   <footer class="displayFlex">

@@ -4,6 +4,6 @@ export class User {
     public name: string,
     public age: number,
     public email: string,
-    public authorities: { id: number; authority: string }[]
+    public authorities: { authority: string }[]
   ) {}
 }
