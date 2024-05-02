@@ -121,5 +121,37 @@ public class PeopleDao implements PeopleRepository{
         return true;
     }
 
+    @Override
+    public Collection<Person> findAllUsersWhoAreNotAdmin() {
+//works
+//        TypedQuery<Person> query1 =  entityManager.createQuery("SELECT p FROM Person p " +
+//                "JOIN FETCH p.authorities a " +
+//                "WHERE a.authority = \"ROLE_Admin\"", Person.class);
+//
+//        TypedQuery<Person> query2 =  entityManager.createQuery("SELECT p FROM Person p " +
+//                "JOIN FETCH p.authorities a " +
+//                "WHERE a.authority != \"ROLE_Admin\"", Person.class);
+//
+//        TypedQuery<Person> query =  entityManager.createQuery("SELECT p FROM Person p " +
+//                "JOIN FETCH p.authorities a " +
+//                "WHERE a.authority != \"ROLE_Admin\" AND p NOT IN (SELECT p FROM Person p " +
+//                "JOIN p.authorities a " +
+//                "WHERE a.authority = \"ROLE_Admin\")", Person.class);
+
+        //works
+//        TypedQuery<Person> query1 =  entityManager.createQuery("SELECT ps FROM Person ps " +
+//                "JOIN FETCH ps.authorities a " +
+//                "WHERE a IN (SELECT au FROM Authorities au WHERE au.authority = \"ROLE_Admin\")", Person.class);
+
+        TypedQuery<Person> query =  entityManager.createQuery("SELECT p FROM Person p " +
+                "WHERE p NOT IN (SELECT ps FROM Person ps " +
+                "JOIN  ps.authorities a " +
+                "WHERE a IN (SELECT au FROM Authorities au WHERE au.authority = \"ROLE_Admin\"))" , Person.class);
+
+        Collection<Person> people = query.getResultList();
+
+        return people;
+    }
+
 
 }

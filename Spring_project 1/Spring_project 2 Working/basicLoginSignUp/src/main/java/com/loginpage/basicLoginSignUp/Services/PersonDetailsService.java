@@ -90,8 +90,12 @@ public class PersonDetailsService {
         return peopleRepository.deleteUserById(theId);
     }
 
+    public Collection<Person> getAllUsersRole_user(){
+        return this.peopleRepository.findAllUsersWhoAreNotAdmin();
+    }
 
     private boolean personSanityCheck(Person person){
         return person.getName() != null && person.getPassword() != null && person.getAge() > 0 && person.getEmail() != null;
     }
+
 }

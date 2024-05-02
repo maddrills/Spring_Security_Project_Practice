@@ -45,6 +45,8 @@ public class BasicLoginSignUpApplication {
 
 //			addAUser(personDetailsService);
 //			updateTheRoleOfUser(personDetailsService);
+			personDetailsService.getAllUsersRole_user().forEach((Person value) -> System.out.println(value.getName()));
+
 		};
 	}
 

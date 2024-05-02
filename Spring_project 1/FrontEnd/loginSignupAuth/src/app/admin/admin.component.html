@@ -15,38 +15,19 @@
         <th>Email</th>
         <th>Remove</th>
       </tr>
-      <tr>
-        <td>Justin Trudy</td>
-        <td>34</td>
-        <td>justinATgmail.com</td>
+      <!-- For Angular 6.1+ , you can use default pipe keyvalue -->
+      <tr *ngFor="let values of allUserDetailsObject | keyvalue">
+        <td>{{ values.value.name }}</td>
+        <td>{{ values.value.age }}</td>
+        <td>{{ values.value.email }}</td>
         <td>
           <div class="buttonShell">
-            <button>Remove</button>
+            <button (click)="userIdToRemove(values.key)">Remove</button>
           </div>
         </td>
       </tr>
       <tr>
-        <td>Justin Trudy</td>
-        <td>34</td>
-        <td>justinATgmail.com</td>
-        <td>
-          <div class="buttonShell">
-            <button>Remove</button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Justin Trudy</td>
-        <td>34</td>
-        <td>justinATgmail.com</td>
-        <td>
-          <div class="buttonShell">
-            <button>Remove</button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Justin Trudy</td>
+        <td>Dumb Data</td>
         <td>34</td>
         <td>justinATgmail.com</td>
         <td>

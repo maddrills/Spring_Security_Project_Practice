@@ -34,6 +34,7 @@ export class SuccessComponent implements OnInit, OnDestroy {
     this.authService.isAdmin.subscribe((adminStatus) => {
       if (adminStatus) {
         this.adminHere = true;
+        this.authService.getAllUserData();
       }
     });
     console.log(this.adminHere);

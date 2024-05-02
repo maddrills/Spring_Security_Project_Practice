@@ -22,8 +22,6 @@ public class LoginRestController {
         String username = authentication.getName();
 
         return personDetailsService.getAllDetailsOfAPerson(username);
-
-        //Person person = new Person("Kelly",26, "mat@matify.com","hsbc");
     }
 
 

@@ -3,7 +3,11 @@ package com.loginpage.basicLoginSignUp.Controllers;
 import com.loginpage.basicLoginSignUp.Services.PersonDetailsService;
 import com.loginpage.basicLoginSignUp.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/user")
@@ -11,22 +15,6 @@ public class PersonRestController {
 
     @Autowired
     PersonDetailsService personDetailsService;
-
-//    @GetMapping("/getAllUserData")
-//    public AllUserData getAllUserData(){
-//
-//        Person person = personDetailsService.getPersonByName("Mathew Francis");
-//
-//        AllUserData allUserData = new AllUserData(
-//                person.getAuthorities(),
-//                person.getEmail(),
-//                person.getAge(),
-//                person.getName());
-//
-//        System.out.print(allUserData);
-//
-//        return allUserData;
-//    }
 
     @GetMapping("/getAllUserData")
     public String getAllUserData(){
@@ -46,17 +34,24 @@ public class PersonRestController {
         return "User Added";
     }
 
+
+    @GetMapping("/get-all-users")
+    public Collection<Person> allUsersInDb(){
+        return this.personDetailsService.getAllUsersRole_user();
+    }
+
+
     //remove user by username
     @DeleteMapping("/remove-user")
-    public String removeAUser(@RequestParam int userId){
+    public ResponseEntity<?> removeAUser(@RequestParam int userId){
 
-        if(userId <= 0) return "Invalid";
+        if(userId <= 0) return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
 
         System.out.print(userId);
 
         this.personDetailsService.deletePerson(userId);
 
-        return "deleted";
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
 }

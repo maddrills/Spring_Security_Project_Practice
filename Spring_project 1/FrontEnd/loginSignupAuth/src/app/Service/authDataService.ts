@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../Model/userModel';
 import { BehaviorSubject, Subject, tap } from 'rxjs';
@@ -11,6 +11,7 @@ export class AuthDataService {
   // in our case there will be an initial value of false
   authSubStatus = new BehaviorSubject<boolean>(false);
   isAdmin = new BehaviorSubject<boolean>(false);
+  allUsersData = new BehaviorSubject<User[] | null>(null);
 
   constructor(private http: HttpClient) {}
 
@@ -79,6 +80,24 @@ export class AuthDataService {
       password: password,
       age: age,
       email: email,
+    });
+  }
+
+  //get all userData
+  //remember subscription for this is made in the welcome component if the user is an admin
+  getAllUserData() {
+    return this.http
+      .get<User[]>('http://localhost:8080/user/get-all-users')
+      .subscribe((array) => this.allUsersData.next(array));
+  }
+
+  //delete a user by id
+  deleteAUser(id: number) {
+    //you have to chain for this to work because in angular HttpParams is immutable
+    const idParameter = new HttpParams().set('userId', id);
+
+    return this.http.delete<any>('http://localhost:8080/user/remove-user', {
+      params: idParameter,
     });
   }
 }
