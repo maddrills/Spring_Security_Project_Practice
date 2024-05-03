@@ -5,11 +5,12 @@ import { User } from '../Model/userModel';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { LogoutButtonComponent } from '../logout-button/logout-button.component';
 
 @Component({
   selector: 'app-success',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LogoutButtonComponent],
   templateUrl: './success.component.html',
   styleUrl: './success.component.css',
 })
