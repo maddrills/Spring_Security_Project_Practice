@@ -1,0 +1,16 @@
+.roundCasing svg{
+    height: 13.3rem;
+    width: 13.3rem;
+    fill: #ffe3e3;
+    background-color: #c92a2a;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 0.5rem 0.07rem rgba(0, 0, 0, 0.41);
+    transition: all 0.33s;
+}
+
+.roundCasing svg:active,
+.roundCasing svg:hover{
+    box-shadow: 0 0 0.1rem 0.01rem rgba(0, 0, 0, 0.41);
+    background-color: #e03131;
+}
