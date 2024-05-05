@@ -47,8 +47,8 @@ public class ProjectSecurityConfig {
                         config.setAllowedMethods(Collections.singletonList("*"));
                         config.setAllowCredentials(true);
                         config.setAllowedHeaders(Collections.singletonList("*"));
-                        //the JWT will be sent to UI under Authorization header
-                        config.setExposedHeaders(List.of("Authorization"));
+                        //the JWT will be sent to UI under Authorization header and XSR under X-XSRF-TOKEN
+                        config.setExposedHeaders(List.of("Authorization","X-XSRF-TOKEN"));
                         config.setMaxAge(3600L);
                         return config;
                     }
@@ -67,13 +67,13 @@ public class ProjectSecurityConfig {
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests((requests) -> requests
                         //only admin can use this rout
-                        .requestMatchers( "/user/addUser","/user/remove-user","/user/get-all-users").hasAnyRole("Admin")
+                        .requestMatchers( "/user/addUser","/user/remove-user","/user/get-all-users","/user/get-all-users-post").hasAnyRole("Admin")
                         .requestMatchers("/user/getAllUserData").hasAnyRole("User")
                         //.requestMatchers("/user/**").hasAnyRole("Admin","User")
                         //any one who is authenticated can access /users
-                        .requestMatchers("/user").authenticated()
+                        .requestMatchers("/login/LoginUser","/user","/user/getXsrf").authenticated()
                         //all the rest are open to public
-                        .requestMatchers("/login/LoginUser","/Sign-up/signup-user").permitAll()
+                        .requestMatchers("/Sign-up/signup-user").permitAll()
                 )
                 // redirect to /login if the user is not authenticated  Customizer.withDefaults() enables a security feature using the defaults provided by Spring Security
                 .formLogin(Customizer.withDefaults())

@@ -15,16 +15,21 @@ public class CsrfCookieFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        System.out.println("Incide CSRF token filter");
         //org.springframework.security.web.csrf.CsrfTokenJWT Generated
-        //System.out.print(CsrfToken.class.getName());
+        System.out.print(CsrfToken.class.getName());
         //gets the cookie from the filter chain
         CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
         if(null != csrfToken.getHeaderName()){
             //static final String DEFAULT_CSRF_HEADER_NAME = "X-XSRF-TOKEN";
             //X-XSRF-TOKEN
-            //System.out.println(csrfToken.getHeaderName());
+            System.out.println(csrfToken.getHeaderName());
             //header name will be XSRF-TOKEN
             response.setHeader(csrfToken.getHeaderName(), csrfToken.getToken());
+            System.out.println( csrfToken.getToken());
+            System.out.println(csrfToken.getHeaderName());
+            System.out.println(response.getHeader(csrfToken.getHeaderName()));
+            System.out.println("Token GENERATED -----");
         }
         filterChain.doFilter(request, response);
     }

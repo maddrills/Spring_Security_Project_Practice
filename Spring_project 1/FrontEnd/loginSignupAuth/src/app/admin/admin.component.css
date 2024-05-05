@@ -81,3 +81,7 @@ footer,
 footer p {
   font-size: 1.2rem;
 }
+
+.app-logout-button {
+  margin-left: auto;
+}

@@ -75,3 +75,7 @@ footer p {
 .buttonShell button:active {
   background-color: #f03e3e;
 }
+
+.app-logout-button {
+  margin-left: auto;
+}

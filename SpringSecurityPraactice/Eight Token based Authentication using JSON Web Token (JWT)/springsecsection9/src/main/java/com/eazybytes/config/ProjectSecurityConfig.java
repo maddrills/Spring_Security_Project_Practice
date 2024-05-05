@@ -52,9 +52,9 @@ public class ProjectSecurityConfig {
                 })).csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/contact","/register")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
-                .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
-                .addFilterAt(new AuthoritiesLoggingAtFilter(),BasicAuthenticationFilter.class)
-                .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
+//                .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+//                .addFilterAt(new AuthoritiesLoggingAtFilter(),BasicAuthenticationFilter.class)
+//                .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
                 //token generation after BasicAuthenticationFilter.class
                 .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 //then position the verification filter

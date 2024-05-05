@@ -29,6 +29,15 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
         //    public static final String JWT_KEY = "jxgEQeXHuPq8VdbyYFNkANdudQ53YUn4";
         //    public static final String JWT_HEADER = "Authorization";
         String jwt = request.getHeader(SecurityConstants.JWT_HEADER);
+        //below is the COOKIE approach
+/*        String jwt = null;
+        for(var cookie : request.getCookies()){
+            if(cookie.getName().equals("Authorization")){
+                System.out.print("COOKIE");
+                System.out.println(cookie.getValue());
+                jwt = cookie.getValue();
+            }
+        }*/
         if (null != jwt) {
             try {
                 //generating the key

@@ -8,7 +8,7 @@ import { LogoutButtonComponent } from '../logout-button/logout-button.component'
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule,LogoutButtonComponent],
+  imports: [CommonModule, LogoutButtonComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css',
 })
@@ -21,10 +21,7 @@ export class AdminComponent implements OnInit {
   //storage here is not a problem as the user database here will be limited to 10 O(n) n = 10
   allUserDetailsObject: Map<number, User> = new Map();
 
-  constructor(
-    private authDataService: AuthDataService,
-    private dataService: AuthDataService
-  ) {}
+  constructor(private authDataService: AuthDataService) {}
 
   ngOnInit(): void {
     //the subscription for get request is done in the welcome component if admin is logged in
@@ -42,7 +39,7 @@ export class AdminComponent implements OnInit {
   }
 
   userIdToRemove(id: number) {
-    this.dataService.deleteAUser(id).subscribe({
+    this.authDataService.deleteAUser(id).subscribe({
       next: (sMessage) => {
         console.log(sMessage);
         this.allUserDetailsObject.delete(id);

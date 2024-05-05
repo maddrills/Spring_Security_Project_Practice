@@ -1,12 +1,13 @@
 import {
   HttpEvent,
+  HttpEventType,
   HttpHandler,
   HttpHeaders,
   HttpInterceptor,
   HttpInterceptorFn,
   HttpRequest,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { AuthDataService } from './authDataService';
 import { CookieService } from 'ngx-cookie-service';
 import { Injectable, inject } from '@angular/core';
@@ -31,26 +32,52 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     console.log('----------User available in Interceptor-----------');
     //then attach Authorization and XSRF-TOKEN headers
     const authorization = sessionStorage.getItem('Authorization');
-    const xxrf = cookieService.get('XSRF-TOKEN');
-    if (authorization && xxrf) {
+    let xsrf = null;
+    authService.XSRF_TOKEN.subscribe((CSRF_TOKEN) => (xsrf = CSRF_TOKEN));
+
+    //do not break till xsrf token is generated or there is a legit error
+    if (authorization && xsrf) {
       console.log('Aauth Details available');
+      console.log(xsrf);
       httpHeaders = httpHeaders
         .append('Authorization', authorization)
-        .append('X-XSRF-TOKEN', xxrf);
+        // make sure you return the token as a X-XSRF-TOKEN header
+        .append('X-XSRF-TOKEN', xsrf);
     }
+
     console.log(
       '----------end XSRF-TOKEN and Authorization User available in Interceptor-----------'
     );
   }
-
   if (loginStatus) {
     const reqClone = req.clone({
       headers: httpHeaders,
     });
-    return next(reqClone);
+    return next(reqClone).pipe(
+      tap((resp) => {
+        if (resp.type === HttpEventType.Response) {
+          console.log('After burner login call');
+          //make sure CORS is handled for this
+          authService.tokenHistory.push(resp.headers.get('X-XSRF-TOKEN')!);
+          authService.XSRF_TOKEN.next(resp.headers.get('X-XSRF-TOKEN')!);
+        }
+      })
+    );
   }
 
-  return next(req);
+  return next(req).pipe(
+    tap((event) => {
+      if (event.type === HttpEventType.Response) {
+        console.log('After burner');
+        //make sure CORS is handled for this
+        authService.tokenHistory.push(event.headers.get('X-XSRF-TOKEN')!);
+        authService.XSRF_TOKEN.next(event.headers.get('X-XSRF-TOKEN')!);
+        console.log(event.headers.get('X-XSRF-TOKEN')!);
+        console.log(event.headers.get('Authorization')!);
+        console.log('After burner end');
+      }
+    })
+  );
 };
 
 // below is the old way for angular 14 <

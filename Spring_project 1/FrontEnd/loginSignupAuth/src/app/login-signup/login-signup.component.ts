@@ -9,7 +9,13 @@ import { LogoutButtonComponent } from '../logout-button/logout-button.component'
 @Component({
   selector: 'app-login-signup',
   standalone: true,
-  imports: [CommonModule, RouterModule, SuccessComponent, AdminComponent,LogoutButtonComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    SuccessComponent,
+    AdminComponent,
+    LogoutButtonComponent,
+  ],
   templateUrl: './login-signup.component.html',
   styleUrl: './login-signup.component.css',
 })

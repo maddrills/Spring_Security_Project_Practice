@@ -32,7 +32,10 @@ export class SuccessComponent implements OnInit, OnDestroy {
       //! at the end means your confident you wont get null back
       window.sessionStorage.getItem('userDetails')!
     );
+    console.log('----ADMIN---OUT---', this.adminHere);
     this.authService.isAdmin.subscribe((adminStatus) => {
+      console.log('----ADMIN---IN---', this.adminHere);
+      console.log('----ADMIN---Lambda', adminStatus);
       if (adminStatus) {
         this.adminHere = true;
         this.authService.getAllUserData();

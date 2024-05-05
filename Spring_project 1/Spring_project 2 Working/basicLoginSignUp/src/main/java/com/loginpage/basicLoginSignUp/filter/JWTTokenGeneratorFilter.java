@@ -4,6 +4,7 @@ import com.loginpage.basicLoginSignUp.Constents.SecurityConstants;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
@@ -46,10 +47,16 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
                     .signWith(key).compact();
             //SecurityConstants.JWT_HEADER, in the Constants SecurityConstants folder
             response.setHeader(SecurityConstants.JWT_HEADER, jwt);
+            //uncomment for cookie based saving
+/*            Cookie cookie = new Cookie(SecurityConstants.JWT_HEADER,jwt);
+            cookie.setHttpOnly(true);
+            cookie.setPath("/");
+            response.addCookie(cookie);*/
             System.out.println("JWT Generated");
         }
         System.out.println("Intercepted");
 
+        System.out.println(response.getHeader("X-XSRF-TOKEN"));
         filterChain.doFilter(request, response);
     }
 

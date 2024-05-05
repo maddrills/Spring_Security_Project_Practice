@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../Model/userModel';
 import { BehaviorSubject, Subject, tap } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthDataService {
@@ -12,8 +13,11 @@ export class AuthDataService {
   authSubStatus = new BehaviorSubject<boolean>(false);
   isAdmin = new BehaviorSubject<boolean>(false);
   allUsersData = new BehaviorSubject<User[] | null>(null);
+  XSRF_TOKEN = new BehaviorSubject<String | null>(null);
 
-  constructor(private http: HttpClient) {}
+  tokenHistory: Array<String> = [];
+
+  constructor(private http: HttpClient, private cookey: CookieService) {}
 
   testService() {
     console.log(this);
@@ -85,19 +89,47 @@ export class AuthDataService {
 
   //get all userData
   //remember subscription for this is made in the welcome component if the user is an admin
+  // getAllUserData() {
+  //   return this.http
+  //     .get<User[]>('http://localhost:8080/user/get-all-users')
+  //     .subscribe({
+  //       next: (array) => {
+  //         this.allUsersData.next(array);
+  //       },
+  //       error: (e) => console.log(e),
+  //     });
+  // }
   getAllUserData() {
     return this.http
-      .get<User[]>('http://localhost:8080/user/get-all-users')
-      .subscribe((array) => this.allUsersData.next(array));
+      .post<any>('http://localhost:8080/user/get-all-users-post', null)
+      .subscribe({
+        next: (array) => {
+          this.allUsersData.next(array);
+        },
+        error: (e) => console.log(e),
+      });
   }
 
   //delete a user by id
   deleteAUser(id: number) {
     //you have to chain for this to work because in angular HttpParams is immutable
     const idParameter = new HttpParams().set('userId', id);
-
+    console.log('the id to be deleted ', id);
+    this.XSRF_TOKEN.subscribe((a) => {
+      console.log('xxxxxxxxxxxx-----xxxxxxxxx', a);
+    });
+    this.tokenHistory.forEach((a) => console.log(a));
     return this.http.delete<any>('http://localhost:8080/user/remove-user', {
       params: idParameter,
     });
+  }
+
+  //logout of everything
+  logOut() {
+    window.sessionStorage.setItem('Authorization', '');
+    window.sessionStorage.setItem('userDetails', '');
+    this.authSubStatus.next(false);
+    this.isAdmin.next(false);
+    this.authenticated = false;
   }
 }

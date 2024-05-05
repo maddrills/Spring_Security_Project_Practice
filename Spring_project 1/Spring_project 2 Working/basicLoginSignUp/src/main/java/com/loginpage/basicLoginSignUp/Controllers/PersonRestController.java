@@ -16,10 +16,8 @@ public class PersonRestController {
     @Autowired
     PersonDetailsService personDetailsService;
 
-    @GetMapping("/getAllUserData")
-    public String getAllUserData(){
-
-        return "Auth In";
+    @GetMapping("/getXsrf")
+    public void getAllUserData(){
     }
 
     @GetMapping("/userOnly")
@@ -37,6 +35,11 @@ public class PersonRestController {
 
     @GetMapping("/get-all-users")
     public Collection<Person> allUsersInDb(){
+        return this.personDetailsService.getAllUsersRole_user();
+    }
+
+    @PostMapping("/get-all-users-post")
+    public Collection<Person> getAllUsersInDb(){
         return this.personDetailsService.getAllUsersRole_user();
     }
 
