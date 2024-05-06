@@ -21,7 +21,6 @@ export class LoginComponent {
 
   onSubmit(formSettings: NgForm) {
     const formDataFields = formSettings.form.value;
-
     const username = formDataFields.username;
     const password = formDataFields.password;
 
@@ -45,7 +44,6 @@ export class LoginComponent {
 
         window.sessionStorage.setItem('userDetails', JSON.stringify(user!));
         console.log('Success');
-
         this.router.navigate(['welcome']);
       },
       error: (e) => {

@@ -5,6 +5,7 @@ import com.loginpage.basicLoginSignUp.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -16,8 +17,9 @@ public class PersonRestController {
     @Autowired
     PersonDetailsService personDetailsService;
 
-    @GetMapping("/getXsrf")
-    public void getAllUserData(){
+    @PostMapping("/getXSRfToken")
+    public CsrfToken getAllUserData(CsrfToken csrfToken){
+        return csrfToken;
     }
 
     @GetMapping("/userOnly")
@@ -40,6 +42,7 @@ public class PersonRestController {
 
     @PostMapping("/get-all-users-post")
     public Collection<Person> getAllUsersInDb(){
+        System.out.print("All users call");
         return this.personDetailsService.getAllUsersRole_user();
     }
 

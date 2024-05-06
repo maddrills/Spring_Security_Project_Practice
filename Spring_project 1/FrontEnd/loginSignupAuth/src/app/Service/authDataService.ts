@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../Model/userModel';
-import { BehaviorSubject, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Subject, switchMap, tap } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({ providedIn: 'root' })
@@ -100,28 +100,121 @@ export class AuthDataService {
   //     });
   // }
   getAllUserData() {
-    return this.http
-      .post<any>('http://localhost:8080/user/get-all-users-post', null)
+    //get XSRF token
+    console.log('-----------PRE USER DETAILS--------------');
+    this.getAnXSRfToken()
+      .pipe(
+        switchMap(() => {
+          console.log('in switch map');
+          let takiTiki = null;
+          this.XSRF_TOKEN.subscribe((token) => {
+            console.log(token);
+            takiTiki = token;
+          });
+          console.log(`Token is === ${takiTiki}`);
+          //const httpHead = new HttpHeaders().append('X-XSRF-TOKEN', takiTiki!);
+          return this.http
+            .post<User[]>(
+              'http://localhost:8080/user/get-all-users-post',
+              null,
+              {
+                //headers: httpHead,
+                observe: 'response',
+                withCredentials: true,
+              }
+            )
+            .pipe(
+              tap((array) => {
+                console.log('-----------PRE USER DETAILS--------------');
+                console.log('Data chained');
+                this.allUsersData.next(array.body);
+              })
+            );
+        })
+      )
       .subscribe({
-        next: (array) => {
-          this.allUsersData.next(array);
-        },
-        error: (e) => console.log(e),
+        next: (a) => console.log('a', a),
+        error: (e) => console.log('error in Map chain', e),
       });
+    //
+    // this.XSRF_TOKEN.subscribe((val) => console.log(val));
+    // console.log('-----token gen-----');
+    // return this.http
+    //   .post<User[]>('http://localhost:8080/user/get-all-users-post', null, {
+    //     observe: 'response',
+    //     withCredentials: true,
+    //   })
+    //   .subscribe({
+    //     next: (array) => {
+    //       console.log(array.body);
+    //       this.allUsersData.next(array.body);
+    //     },
+    //     error: (e) => {
+    //       console.log(e);
+    //     },
+    //   });
   }
 
   //delete a user by id
   deleteAUser(id: number) {
+    //get XSRF token
+    return this.getAnXSRfToken().pipe(
+      //Switch man look up
+      switchMap(() => {
+        //you have to chain for this to work because in angular HttpParams is immutable
+        const idParameter = new HttpParams().set('userId', id);
+
+        return this.http.delete<any>('http://localhost:8080/user/remove-user', {
+          params: idParameter,
+          observe: 'response',
+          withCredentials: true,
+        });
+      })
+    );
     //you have to chain for this to work because in angular HttpParams is immutable
-    const idParameter = new HttpParams().set('userId', id);
-    console.log('the id to be deleted ', id);
-    this.XSRF_TOKEN.subscribe((a) => {
-      console.log('xxxxxxxxxxxx-----xxxxxxxxx', a);
-    });
-    this.tokenHistory.forEach((a) => console.log(a));
-    return this.http.delete<any>('http://localhost:8080/user/remove-user', {
-      params: idParameter,
-    });
+    // const idParameter = new HttpParams().set('userId', id);
+    // console.log('the id to be deleted ', id);
+    // this.XSRF_TOKEN.subscribe((a) => {
+    //   console.log('xxxxxxxxxxxx-----xxxxxxxxx', a);
+    // });
+    // this.tokenHistory.forEach((a) => console.log(a));
+    // return this.http.delete<any>('http://localhost:8080/user/remove-user', {
+    //   params: idParameter,
+    //   observe: 'response',
+    //   withCredentials: true,
+    // });
+  }
+
+  //pre flight for XSRF token
+  getAnXSRfToken() {
+    //its a route to the back end that is not protected by any XSRF protection
+    //must be generated per request
+    //in backend check the route and you'll find what it returns is an XSRF token
+    console.log('In XSRF token gen method');
+    return this.http
+      .post<{
+        parameterName: string;
+        headerName: string;
+        token: string;
+      }>('http://localhost:8080/user/getXSRfToken', null, {
+        observe: 'response',
+        withCredentials: true,
+      })
+      .pipe(
+        tap((tokenData) => {
+          console.log('REQ --- token ---generated ');
+          console.log(tokenData.body?.token!);
+          this.XSRF_TOKEN.next(tokenData.body?.token!);
+        })
+      );
+    // .subscribe({
+    //   next: (tokenData) => {
+    //     console.log('REQ --- token ---generated ');
+    //     console.log(tokenData.token);
+    //     this.XSRF_TOKEN.next(tokenData.token);
+    //   },
+    //   error: (e) => console.log(e),
+    // });
   }
 
   //logout of everything

@@ -40,15 +40,22 @@ export class AdminComponent implements OnInit {
 
   userIdToRemove(id: number) {
     this.authDataService.deleteAUser(id).subscribe({
-      next: (sMessage) => {
-        console.log(sMessage);
+      next: (a) => {
+        console.log('a', a);
         this.allUserDetailsObject.delete(id);
       },
-      error: (eMessage) => {
-        console.log('Error when deleting occurred');
-        console.log(eMessage);
-      },
+      error: (e) => console.log('error in Map chain', e),
     });
+    // .subscribe({
+    //   next: (sMessage) => {
+    //     console.log(sMessage);
+    //     this.allUserDetailsObject.delete(id);
+    //   },
+    //   error: (eMessage) => {
+    //     console.log('Error when deleting occurred');
+    //     console.log(eMessage);
+    //   },
+    // });
     //delete a user by there hash code
   }
 }

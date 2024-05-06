@@ -46,12 +46,16 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
                     //signing it with the key we set on line 35
                     .signWith(key).compact();
             //SecurityConstants.JWT_HEADER, in the Constants SecurityConstants folder
-            response.setHeader(SecurityConstants.JWT_HEADER, jwt);
+            //response.setHeader(SecurityConstants.JWT_HEADER, jwt);
             //uncomment for cookie based saving
-/*            Cookie cookie = new Cookie(SecurityConstants.JWT_HEADER,jwt);
+            Cookie cookie = new Cookie(SecurityConstants.JWT_HEADER,jwt);
             cookie.setHttpOnly(true);
+            // TODO make true in production
+            // FIXME :
+            //  - cookie.setSecure(false); will not use SSL for communication
+            cookie.setSecure(false);
             cookie.setPath("/");
-            response.addCookie(cookie);*/
+            response.addCookie(cookie);
             System.out.println("JWT Generated");
         }
         System.out.println("Intercepted");
