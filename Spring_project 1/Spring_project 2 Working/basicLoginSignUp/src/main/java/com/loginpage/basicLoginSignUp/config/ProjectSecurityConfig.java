@@ -59,7 +59,7 @@ public class ProjectSecurityConfig {
                 //temporarily disabling cross sight resource forgery
                 //.csrf(AbstractHttpConfigurer::disable)
                 .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/Sign-up/signup-user","/register","/user/getXSRfToken")
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                        .csrfTokenRepository(new CookieCsrfTokenRepository()))
                 //.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
 
                 //token generation after BasicAuthenticationFilter.class
