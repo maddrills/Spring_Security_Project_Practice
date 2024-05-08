@@ -10,6 +10,7 @@ import {
 } from '@angular/router';
 import { AuthDataService } from './authDataService';
 
+//check app.router.ts for implimentaion
 @Injectable({ providedIn: 'root' })
 export class AuthGuard {
   static authGuardFn: CanActivateFn = (

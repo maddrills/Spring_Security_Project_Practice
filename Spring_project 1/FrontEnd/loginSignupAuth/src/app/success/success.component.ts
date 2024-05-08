@@ -27,26 +27,18 @@ export class SuccessComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.authService.XSRF_TOKEN.subscribe((token) => {
-      console.log(token);
-    });
     this.authenticated = this.authService.authenticated;
     this.userDetails = JSON.parse(
       //! at the end means your confident you wont get null back
       window.sessionStorage.getItem('userDetails')!
     );
-    console.log('----ADMIN---OUT---', this.adminHere);
     this.authService.isAdmin.subscribe((adminStatus) => {
-      console.log('----ADMIN---IN---', this.adminHere);
-      console.log('----ADMIN---Lambda', adminStatus);
       if (adminStatus) {
         console.log('-----ADMIN --- HERE ---');
         this.adminHere = true;
-        console.log(this.adminHere);
         this.authService.getAllUserData();
       }
     });
-    console.log(this.adminHere);
   }
 
   adminSwitch() {

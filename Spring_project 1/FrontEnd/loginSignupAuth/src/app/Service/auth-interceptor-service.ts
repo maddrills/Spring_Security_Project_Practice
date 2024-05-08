@@ -13,6 +13,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Injectable, inject } from '@angular/core';
 
 //angular 15 > interceptor procedure
+// check the app.component.ts for the root injection of this authInterceptor
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   console.log('Interceptor Fired');
 
@@ -63,15 +64,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   //initial login take
-  return next(req).pipe(
-    tap((event) => {
-      if (event.type === HttpEventType.Response) {
-        console.log('After burner');
-        //make sure CORS is handled for this
-        console.log('After burner end');
-      }
-    })
-  );
+  return next(req)
 };
 
 // below is the old way for angular 14 <

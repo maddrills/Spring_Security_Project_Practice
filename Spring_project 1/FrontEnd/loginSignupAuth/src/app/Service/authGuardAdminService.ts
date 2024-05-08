@@ -9,6 +9,7 @@ import {
 import { Observable, map } from 'rxjs';
 import { AuthDataService } from './authDataService';
 
+//check app.router.ts for implimentaion
 @Injectable({ providedIn: 'root' })
 export class AuthGuardAdminService {
   static authGuardFn: CanActivateFn = (
