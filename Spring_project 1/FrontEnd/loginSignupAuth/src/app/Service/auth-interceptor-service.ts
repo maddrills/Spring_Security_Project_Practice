@@ -31,18 +31,15 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   if (loginStatus) {
     console.log('----------User available in Interceptor-----------');
     //then attach Authorization and XSRF-TOKEN headers
-    //const authorization = sessionStorage.getItem('Authorization');
     let xsrf = null;
     authService.XSRF_TOKEN.subscribe((CSRF_TOKEN) => (xsrf = CSRF_TOKEN));
 
-    //do not break till xsrf token is generated or there is a legit error
-
-    console.log(xsrf);
-    console.log('only Aauth Details available');
+    console.log('only User Details available');
     //console.log(authorization);
     if (xsrf) {
-      console.log('Aauth Details available');
+      console.log('XSRF available');
       console.log(xsrf);
+      // httpHeaders = httpHeaders need to do this because .append returns a new HttpHeaders() like a builder pattern
       httpHeaders = httpHeaders
         // make sure you return the token as a X-XSRF-TOKEN header
         .append('X-XSRF-TOKEN', xsrf);
@@ -50,15 +47,22 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       console.log('XSRF token error');
     }
 
+    //trace the url movement
+    console.log('URL is');
+    console.log(req.url);
+
     console.log(
       '----------end XSRF-TOKEN and Authorization User available in Interceptor-----------'
     );
+
+    //attach the XSRF if available
     const reqClone = req.clone({
       headers: httpHeaders,
     });
     return next(reqClone);
   }
 
+  //initial login take
   return next(req).pipe(
     tap((event) => {
       if (event.type === HttpEventType.Response) {

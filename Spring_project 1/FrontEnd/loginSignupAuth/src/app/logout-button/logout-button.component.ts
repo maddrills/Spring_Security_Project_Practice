@@ -17,10 +17,6 @@ export class LogoutButtonComponent {
 
   logOutClicked() {
     console.log('Logout Clicked');
-    this.authDataService.authSubStatus.next(false);
-    this.authDataService.isAdmin.next(false);
-    this.authDataService.allUsersData.next(null);
     this.authDataService.logOut();
-    this.router.navigate(['']);
   }
 }

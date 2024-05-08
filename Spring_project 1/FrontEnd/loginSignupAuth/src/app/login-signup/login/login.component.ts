@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthDataService } from '../../Service/authDataService';
@@ -15,9 +15,14 @@ import { Subject } from 'rxjs';
   styleUrls: ['./login.component.css', '../login-signup.component.css'],
   // styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   formCondition = false;
   constructor(private authService: AuthDataService, private router: Router) {}
+
+  ngOnInit(): void {
+    if (window.sessionStorage.getItem('userDetails'))
+      this.router.navigate(['welcome']);
+  }
 
   onSubmit(formSettings: NgForm) {
     const formDataFields = formSettings.form.value;
@@ -34,14 +39,8 @@ export class LoginComponent {
       next: (v) => {
         console.log(v);
         const user = <User>v.body;
-        //console.log(user);
-        //console.log(v.headers.get('Authorization'));
-        window.sessionStorage.setItem(
-          'Authorization',
-          //If you are confident that the localStorage.getItem() call can never return null you can use the non-null (!) assertion operator to tell typescript that you know what you are doing:
-          v.headers.get('Authorization')!
-        );
-
+        //if you want it to last if the user closes the app use local storage
+        //session storage will only maintain a page refresh state
         window.sessionStorage.setItem('userDetails', JSON.stringify(user!));
         console.log('Success');
         this.router.navigate(['welcome']);
