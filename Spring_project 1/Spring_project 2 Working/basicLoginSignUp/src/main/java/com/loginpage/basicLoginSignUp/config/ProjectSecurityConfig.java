@@ -34,6 +34,10 @@ public class ProjectSecurityConfig {
         CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
         requestHandler.setCsrfRequestAttributeName("_csrf");
 
+        //TODO  CSRF token is sent as a cookie(httponly true) and value through request rout
+        //TODO when sent back both cookie value and header XSRF must match
+        //TODO make SessionCreationPolicy.STATELESS to SessionCreationPolicy.IF_REQUIRED so that we don't have to produce a new XSRF token for the same request provided it is the same concurrent http request
+
         // bellow line is used when you are using JWT tokens instead of jSession session keys but i put always because i guess CSRF token needs it
         http.
                 logout((logout) -> logout.deleteCookies("Authorization","JSESSIONID","XSRF-TOKEN"))
