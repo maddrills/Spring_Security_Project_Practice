@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.*;
 import org.springframework.util.StringUtils;
@@ -33,8 +34,10 @@ public class ProjectSecurityConfig {
         CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
         requestHandler.setCsrfRequestAttributeName("_csrf");
 
-        // bellow line is used when you are using JWT tokens instead of jSession session keys
-        http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        // bellow line is used when you are using JWT tokens instead of jSession session keys but i put always because i guess CSRF token needs it
+        http.
+                logout((logout) -> logout.deleteCookies("Authorization","JSESSIONID","XSRF-TOKEN"))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
 
 
                 //now because we aare sending the JWT token to The UI Application in a Header
@@ -58,8 +61,9 @@ public class ProjectSecurityConfig {
 
                 //temporarily disabling cross sight resource forgery
                 //.csrf(AbstractHttpConfigurer::disable)
-                .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/Sign-up/signup-user","/register","/user/getXSRfToken")
-                        .csrfTokenRepository(new CookieCsrfTokenRepository()))
+                .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/Sign-up/signup-user","/register","/user/getXSRfToken","/logout")
+                        .csrfTokenRepository(new CookieCsrfTokenRepository())
+                )
                 //.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
 
                 //token generation after BasicAuthenticationFilter.class
@@ -72,7 +76,7 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/user/getAllUserData").hasAnyRole("User")
                         //.requestMatchers("/user/**").hasAnyRole("Admin","User")
                         //any one who is authenticated can access /users
-                        .requestMatchers("/login/LoginUser","/user","/user/getXSRfToken").authenticated()
+                        .requestMatchers("/login/LoginUser","/user","/user/getXSRfToken","/logout").authenticated()
                         //all the rest are open to public
                         .requestMatchers("/Sign-up/signup-user").permitAll()
                 )

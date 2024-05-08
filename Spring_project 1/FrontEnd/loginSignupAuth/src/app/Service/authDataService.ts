@@ -219,10 +219,42 @@ export class AuthDataService {
 
   //logout of everything
   logOut() {
-    window.sessionStorage.setItem('Authorization', '');
-    window.sessionStorage.setItem('userDetails', '');
-    this.authSubStatus.next(false);
-    this.isAdmin.next(false);
-    this.authenticated = false;
+    console.log('Log out initialed');
+    this.getAnXSRfToken()
+      .pipe(
+        switchMap(() => {
+          console.log('in switch map');
+          let takiTiki = null;
+          this.XSRF_TOKEN.subscribe((token) => {
+            console.log('Last Logout XSRF');
+            console.log(token);
+            takiTiki = token;
+          });
+          console.log(`Token is === ${takiTiki}`);
+          return this.http.post<any>('http://localhost:8080/logout', null, {
+            observe: 'response',
+            withCredentials: true,
+          });
+        })
+      )
+      .subscribe({
+        next: (n) => console.log(n),
+        error: (er) => console.log(er),
+      });
+    // this.http
+    //   .get('http://localhost:8080/logout', {
+    //     responseType: 'text',
+    //     observe: 'response',
+    //     withCredentials: true,
+    //   })
+    //   .subscribe({
+    //     next: (n) => console.log(n),
+    //     error: (er) => console.log(er),
+    //   });
+    // window.sessionStorage.setItem('Authorization', '');
+    // window.sessionStorage.setItem('userDetails', '');
+    // this.authSubStatus.next(false);
+    // this.isAdmin.next(false);
+    // this.authenticated = false;
   }
 }
