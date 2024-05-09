@@ -59,6 +59,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                 customer.getAuthorities().forEach(a -> authorities.add(new SimpleGrantedAuthority(a.getAuthority())));
 
                 //final send the username password and auth as a token which will call the authenticate method in the ProviderManager
+                // in this edit i wont store the password but a use id
+
+                //this is so that i can get a global access to an authenticated users name and id
+                username = username+","+customer.getId();
+
                 return new UsernamePasswordAuthenticationToken(username, pwd, authorities);
             }
             else {

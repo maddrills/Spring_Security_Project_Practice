@@ -20,7 +20,11 @@ public class LoginRestController {
     public Person testThis(Authentication authentication){
         System.out.println("Login");
 
-        String username = authentication.getName();
+        String[] userAndId = authentication.getName().split(",");
+        //security context now has username and id eg ron,1
+        String username = userAndId[0];
+
+        System.out.println(authentication.getAuthorities());
 
         return personDetailsService.getAllDetailsOfAPerson(username);
     }

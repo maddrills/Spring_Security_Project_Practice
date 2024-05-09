@@ -53,6 +53,9 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
                 String username = String.valueOf(claims.get("username"));
                 String authorities = (String) claims.get("authorities");
 
+//                System.out.println("JWT name : "+ username);
+//                System.out.println("JWT auth "+ authorities);
+
                 //if successful the result will be stored in SecurityContextHolder
                 Authentication auth = new UsernamePasswordAuthenticationToken(username, null,
                         //this comes in a string of comas and values
