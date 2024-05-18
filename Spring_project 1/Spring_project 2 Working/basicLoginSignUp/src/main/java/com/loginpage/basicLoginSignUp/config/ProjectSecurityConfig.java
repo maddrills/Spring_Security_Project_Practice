@@ -45,9 +45,8 @@ public class ProjectSecurityConfig {
         // bellow line is used when you are using JWT tokens instead of jSession session keys but i put always because i guess CSRF token needs it
         http.
                 logout((logout) -> logout.deleteCookies("Authorization","JSESSIONID","XSRF-TOKEN"))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
-
-
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                
                 //now because we aare sending the JWT token to The UI Application in a Header
                 //we need to manage it in the CORs config
                 .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
