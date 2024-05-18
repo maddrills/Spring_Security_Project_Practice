@@ -53,7 +53,7 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
             // TODO make true in production
             // FIXME :
             //  - cookie.setSecure(false); will not use SSL for communication
-            cookie.setSecure(false);
+            cookie.setSecure(true);
             cookie.setPath("/");
             response.addCookie(cookie);
             System.out.println("JWT Generated");

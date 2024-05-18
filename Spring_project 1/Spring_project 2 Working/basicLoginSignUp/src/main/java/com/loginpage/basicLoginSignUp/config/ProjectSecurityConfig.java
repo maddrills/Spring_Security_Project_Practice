@@ -34,6 +34,10 @@ public class ProjectSecurityConfig {
         CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
         requestHandler.setCsrfRequestAttributeName("_csrf");
 
+        final CookieCsrfTokenRepository cookieCsrfTokenRepo = new CookieCsrfTokenRepository();
+        //make secure true when using only https
+        cookieCsrfTokenRepo.setCookieCustomizer(responseCookieBuilder -> responseCookieBuilder.secure(true));
+
         //TODO  CSRF token is sent as a cookie(httponly true) and value through request rout
         //TODO when sent back both cookie value and header XSRF must match
         //TODO make SessionCreationPolicy.STATELESS to SessionCreationPolicy.IF_REQUIRED so that we don't have to produce a new XSRF token for the same request provided it is the same concurrent http request
@@ -66,7 +70,8 @@ public class ProjectSecurityConfig {
                 //temporarily disabling cross sight resource forgery
                 //.csrf(AbstractHttpConfigurer::disable)
                 .csrf((csrf) -> csrf.csrfTokenRequestHandler(requestHandler).ignoringRequestMatchers("/Sign-up/signup-user","/register","/user/getXSRfToken")
-                        .csrfTokenRepository(new CookieCsrfTokenRepository())
+                        //.csrfTokenRepository(new CookieCsrfTokenRepository())
+                        .csrfTokenRepository(cookieCsrfTokenRepo)
                 )
                 //.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
 
