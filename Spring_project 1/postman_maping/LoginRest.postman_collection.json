@@ -1,0 +1,309 @@
+{
+	"info": {
+		"_postman_id": "2c90b419-4f27-4284-a84a-bad2f759c242",
+		"name": "LoginRest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29967989"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/file/dropped",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/file/dropped",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"file",
+						"dropped"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/login/LoginUser",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "Ron",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "12345",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/login/LoginUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login",
+						"LoginUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/user/remove-user?userId=5",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJNYXRoZXcgRnJhbmNpcyIsInN1YiI6IkpXVF9Ub2tlbiIsInVzZXJuYW1lIjoiUm9uIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VzZXIsUk9MRV9BZG1pbiIsImlhdCI6MTcxNDQ3NTI1MCwiZXhwIjoxNzE0NTA1MjUwfQ.kyCsiQIYBBjGpiLIUv0ZMm7T4A40bFrB7KHl0wmeQ70",
+						"disabled": true
+					},
+					{
+						"key": "X-XSRF-TOKEN",
+						"value": "283152a3-42ca-4163-9f4c-ce2f6b21f205",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/user/remove-user?userId=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"remove-user"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/user/get-all-users-post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJNYXRoZXcgRnJhbmNpcyIsInN1YiI6IkpXVF9Ub2tlbiIsInVzZXJuYW1lIjoiUm9uIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VzZXIsUk9MRV9BZG1pbiIsImlhdCI6MTcxNDkwODU3NSwiZXhwIjoxNzE0OTM4NTc1fQ.OlBsAJxZJpU-gjHwdS8Vr4q4O41Zps5HZC3xZ7BpWF4"
+					},
+					{
+						"key": "X-XSRF-TOKEN",
+						"value": "c7d251f5-2878-4956-ba90-24ed1421f3f0"
+					},
+					{
+						"key": "_csrf",
+						"value": "ebd81777-a90c-4ab7-8530-bd90279cd0db",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/user/get-all-users-post",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"get-all-users-post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/user/getXSRfToken",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJNYXRoZXcgRnJhbmNpcyIsInN1YiI6IkpXVF9Ub2tlbiIsInVzZXJuYW1lIjoiUm9uIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VzZXIsUk9MRV9BZG1pbiIsImlhdCI6MTcxNDkyMjIxNSwiZXhwIjoxNzE0OTUyMjE1fQ.vHqUhqehZqncrQoXHuF1bCCm1JNbp6Q-_-kDUpEg35w"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/user/getXSRfToken",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"getXSRfToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/login/LoginUser",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "12345",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "John",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/login/LoginUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login",
+						"LoginUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/user/getAllUserData",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJNYXRoZXcgRnJhbmNpcyIsInN1YiI6IkpXVF9Ub2tlbiIsInVzZXJuYW1lIjoiUm9uIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VzZXIsUk9MRV9BZG1pbiIsImlhdCI6MTcxNDQ3NDI4MSwiZXhwIjoxNzE0NTA0MjgxfQ._WUAc7eu7YSheb8QGq0ztxTwxQwvArwzqAtHA8HjaOo"
+					},
+					{
+						"key": "X-XSRF-TOKEN",
+						"value": "1439ae0a-e6d2-4e13-9254-acdf1aa7e727"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/user/getAllUserData",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"getAllUserData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/user/get-all-users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/get-all-users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"get-all-users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/user/getXsrf",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJNYXRoZXcgRnJhbmNpcyIsInN1YiI6IkpXVF9Ub2tlbiIsInVzZXJuYW1lIjoiUm9uIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VzZXIsUk9MRV9BZG1pbiIsImlhdCI6MTcxNDc2MTA0NiwiZXhwIjoxNzE0NzkxMDQ2fQ._GN7Skm8cr7zVioBZbg8ohe1mQsu5AfottNtaRNSvj8"
+					},
+					{
+						"key": "XSRF-TOKEN",
+						"value": "cb3afd2f-ee27-4e5e-a722-7d99323151cf",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/user/getXsrf",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"getXsrf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/logout",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-XSRF-TOKEN",
+						"value": "37022ecd-5a9d-433b-afd3-414c5e1f999b"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"logout"
+					],
+					"query": [
+						{
+							"key": "X-XSRF-TOKEN",
+							"value": "83044efe-1bec-4eb6-a7d2-ef3bf5257dc7",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
